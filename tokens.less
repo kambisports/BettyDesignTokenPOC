@@ -1,0 +1,311 @@
+///////////////////////////////
+///////////////////////////////
+// DOCUMENT OVERVIEW
+// - Presentation of Less built in functions used in this doc
+// - Mixins (Less functions) created for this doc
+// - Palette Tokens
+// - Semantic Tokens
+// - Contextual Tokens
+///////////////////////////////
+///////////////////////////////
+
+
+///////////////////////////////
+///////////////////////////////
+// LESS BUILT IN FUNCTIONS
+///////////////////////////////
+
+////////
+// ALPHA
+// Add alpha channel to any color
+// Ex. fade(#000, 60) returns rgba(0, 0, 0, 0.60)
+// More here: https://lesscss.org/functions/#color-operations-fade
+
+////////
+// LIGHTEN
+// Increase the lightness of a color in the HSL color space
+// Note. you can feed it with any color space (hex, rgb, hsl, etc)
+// Ex. lighten(#333, 20) returns #666666 
+// More here: https://lesscss.org/functions/#color-operations-lighten
+
+////////
+// DARKEN
+// Increase the darkness of a color in the HSL color space
+// Note. you can feed it with any color space (hex, rgb, hsl, etc)
+// Ex. darken(#666, 20) returns #333333 
+// More here: https://lesscss.org/functions/#color-operations-darken
+
+////////
+// CONTRAST
+// Check contrast of any background and pick a color to use on it
+// Ex. contrast(@background, @dark-color, @light-color, @contrast-threshold) returns @light-color
+// More here: https://lesscss.org/functions/#color-operations-contrast
+
+
+///////////////////////////////
+///////////////////////////////
+// MIXINS
+///////////////////////////////
+
+////////
+// CREATE BACKGROUND HOVER & ACTIVE STATES
+// Create hover state of background
+// Read more above in the CONTRAST section
+.create-color-hover (@color: red, @contrast: @contrast-threshold) {
+	@result: contrast(@color, darken(@color, @hover-lightness-dark), lighten(@color, @hover-lightness-light), @contrast);
+}
+
+.create-color-active (@color: red, @contrast: @contrast-threshold) {
+	@result: contrast(@color, darken(@color, @active-lightness-dark), lighten(@color, @active-lightness-light), @contrast);
+}
+
+
+.create-light-color (@color: red) {
+	// First we check if its a neutral (white, gray or black) color (zero saturation) or not in the boolean. 
+	// If it's a neutral color we keep the saturation 0, otherwise set it to 30
+	@result: if( boolean(saturation(@color) = 0),  hsl(hue(@color),0%, 92%), hsl(hue(@color),30%, 92%) );
+} /// Add saturation below 30 ...
+
+.create-dark-color (@color: red) {
+	// First we check if its a neutral (white, gray or black) color (zero saturation) or not in the boolean. 
+	// If it's a neutral color we keep the saturation 0, otherwise set it to 100
+	@result: if( boolean(saturation(@color) = 0),  hsl(hue(@color),0%, 12%), hsl(hue(@color),100%, 12%) );
+}
+
+
+.create-on-color (@color: red, @contrast: @contrast-threshold) {
+	@result: contrast(@color, .create-dark-color(@color)[@result], .create-light-color(@color)[@result], @contrast);
+}
+
+.create-on-weaker-color (@on-color: red) {
+	//check if the on-color is a darker or lighter color and darken the light or lighten the dark accoringly
+	//@result: if( boolean(luma(@on-color) > 50), darken(@on-color, @weaker-lighness-light), lighten(@on-color, @weaker-lighness-dark) );
+	@result: if( boolean(luma(@on-color) > 50), fade(@on-color, @light-alpha-700), fade(@on-color, @dark-alpha-700));
+}
+
+
+///////////////////////////////
+///////////////////////////////
+// PALETTE TOKENS
+///////////////////////////////
+
+////////
+// Theme color
+// Set the main color of the theme
+@theme: red;
+	@theme-light: .create-light-color(@theme)[@result];
+	@theme-dark: .create-dark-color(@theme)[@result];
+
+////////
+// Neutrals
+// Solid colors for backgrounds or onProperties (together with alphas)
+@neutral-100: #fff; // Surface,  Base for dark contrast onProperties tokens
+@neutral-200: #E6E6E6; // Canvas
+@neutral-300: #DBDBDB; // Disabled Button BG
+// @neutral-400: #fff; 
+// @neutral-600: #fff;
+@neutral-700: #31322E; //Toaster
+// @neutral-800: #141414; //CanvasDark?
+@neutral-900: rgb(0, 0, 0); // Base for light contrast onProperties tokens
+
+////////
+// Alpha scales 
+// To use with both dark and light colors
+@dark-alpha-900: 87;
+@dark-alpha-700: 56;
+@dark-alpha-500: 36;
+@dark-alpha-300: 24;
+@dark-alpha-200: 12;
+@dark-alpha-100: 8;
+@dark-alpha-50: 4;
+
+@light-alpha-900: 100;
+@light-alpha-700: 70;
+@light-alpha-500: 40;
+@light-alpha-300: 24;
+@light-alpha-100: 12;
+@light-alpha-50: 4;
+
+
+////////
+// Generate palette styles for Figma (css)
+.Palette {
+	.Theme { color: @theme }
+	.ThemeLight { color: @theme-light }
+	.ThemeDark { color: @theme-dark }
+
+	.Neutral--100 { color: @neutral-100; }
+	.Neutral--200 { color: @neutral-200; }
+	.Neutral--300 { color: @neutral-300; }
+	.Neutral--700 { color: @neutral-700; }
+	.Neutral--900 { color: @neutral-900; }
+}
+
+
+// Global variables used to set up the tokens
+@contrast-threshold: 40%; // sets the threshold when checking contrast
+
+@hover-lightness-light: 4; // the amount we lighten a color on hover
+@active-lightness-light: 8; // the amount we lighten a color on active
+@hover-lightness-dark: 12; // the amount we darken a color on hover
+@active-lightness-dark: 16; // the amount we darken a color on active
+
+@weaker-lighness-light: 30; // the amount we lighten a color on-weaker
+@weaker-lighness-dark: 50; // the amount we darken a color on on-weaker
+
+
+// Surface
+@surface: @neutral-100;
+@surface-hover: .create-color-hover(@surface)[@result];
+@surface-active: .create-color-active(@surface)[@result];
+@on-surface: .create-on-color (@surface)[@result]; //contrast(@surface, (fade(@neutral-900, @dark-alpha-900)), (fade(@neutral-100, @light-alpha-900)), @contrast-threshold);
+@on-surface-weaker: .create-on-weaker-color(@on-surface)[@result];
+
+// Canvas
+@canvas: @neutral-200;
+@on-canvas: .create-on-color (@canvas)[@result]; //contrast(@canvas, (fade(@neutral-900, @dark-alpha-900)), (fade(@neutral-100, @light-alpha-900)), @contrast-threshold);
+@on-canvas-weaker: .create-on-weaker-color(@on-canvas)[@result];
+
+// Header
+@header: @theme;
+@header-hover: .create-color-hover(@header)[@result];
+@header-active: .create-color-active(@header)[@result];
+@on-header: .create-on-color (@header)[@result];
+@on-header-weaker: .create-on-weaker-color(@on-header)[@result];
+
+// Outcome
+@outcome: aqua;
+@outcome-hover: .create-color-hover(@outcome)[@result];
+@outcome-active: .create-color-active(@outcome)[@result];
+@on-outcome: .create-on-color (@outcome)[@result];
+@on-outcome-weaker: .create-on-weaker-color(@on-outcome)[@result];
+
+
+// Transaction
+@transaction: #1DAC8A;
+@transaction-hover: .create-color-hover(@transaction)[@result];
+@transaction-active: .create-color-active(@transaction)[@result];
+@on-transaction: .create-on-color (@transaction)[@result];
+@on-transaction-weaker: .create-on-weaker-color(@on-transaction)[@result];
+
+// Highlight
+@highlight: #FFA300;
+
+// Selected
+@selected: @highlight;
+@selected-hover: .create-color-hover(@selected)[@result];
+@selected-active: .create-color-active(@selected)[@result];
+@on-selected: .create-on-color (@selected)[@result];
+@on-selected-weaker: .create-on-weaker-color(@on-selected)[@result];
+
+// Input
+@input: @theme;
+@input-hover: .create-color-hover(@input)[@result];
+@input-active: .create-color-active(@input)[@result];
+
+// Disabled
+@disabled: @neutral-300;
+@on-disabled: fade(@neutral-900, @dark-alpha-300);
+
+// Signal colors
+@success: green;
+@success-hover: .create-color-hover(@success)[@result];
+@success-active: .create-color-active(@success)[@result];
+@on-success: .create-on-color (@success)[@result];
+@on-success-weaker: .create-on-weaker-color(@on-success)[@result];
+
+@warning: orange;
+@danger: red;
+@info: blue;
+
+// Feature specific colors
+@live: red;
+@priceboost: pink;
+@eachway: aqua;
+@teaserplus: gold;
+
+
+////////
+// Generate semantic styles for Figma (css)
+.Semantic {
+	.Surface { color: @surface }
+	.Surface--Hover { color: @surface-hover }
+	.Surface--Active { color: @surface-active }
+	.OnSurface { color: @on-surface }
+	.OnSurface--Weaker { color: @on-surface-weaker }
+
+	.Canvas { color: @canvas }
+	.OnCanvas { color: @on-canvas }
+	.OnCanvas--Weaker { color: @on-canvas-weaker }
+
+	.Header { color: @header }
+	.Header--Hover { color: @header-hover }
+	.Header--Active { color: @header-active }
+	.OnHeader { color: @on-header }
+	.OnHeader--Weaker { color: @on-header-weaker }
+
+	.Outcome { color: @outcome }
+	.Outcome--Hover { color: @outcome-hover }
+	.Outcome--Active { color: @outcome-active }
+	.OnOutcome { color: @on-outcome }
+	.OnOutcome--Weaker { color: @on-outcome-weaker }
+
+	.Transaction { color: @transaction }
+	.Transaction--Hover { color: @transaction-hover }
+	.Transaction--Active { color: @transaction-active }
+	.OnTransaction { color: @on-transaction }
+	.OnTransaction--Weaker { color: @on-transaction-weaker }
+
+	.Highlight { color: @highlight }
+
+	.Selected { color: @selected }
+	.Selected--Hover { color: @selected-hover }
+	.Selected--Active { color: @selected-active }
+	.OnSelected { color: @on-selected }
+	.OnSelected--Weaker { color: @on-selected-weaker }
+
+	.Input { color: @input }
+	.Input--Hover { color: @input-hover }
+	.Input--Active { color: @input-active }
+
+	.Disabled { color: @disabled }
+	.OnDisabled { color: @on-disabled }
+
+	// .Success {}
+}
+
+
+///////////////////////////////
+////////////////////////////////
+// CONTEXTUAL TOKENS
+///////////////////////////////
+
+// Button Contained - Primary
+@button-contained-primary: @neutral-100;
+@button-contained-primary-hover: .create-color-hover(@button-contained-primary)[@result];
+@button-contained-primary-active: .create-color-active(@button-contained-primary)[@result];
+// @button-contained-primary-hover: .create-color-state(@button-contained-primary, @hover-lightness, @contrast-threshold)[@result];
+// @button-contained-primary-active: .create-color-state(@button-contained-primary, @active-lightness, @contrast-threshold)[@result];
+// @on-button-contained-primary: @theme-dark;
+@on-button-contained-primary: .create-on-color (@button-contained-primary)[@result];
+@on-button-contained-primary-weaker: .create-on-weaker-color(@on-button-contained-primary)[@result];
+// @on-button-contained-primary-weaker: fade(@on-button-contained-primary, @dark-alpha-700);
+
+////////
+// Generate contextual styles for Figma (css)
+.Contextual {
+	.ButtonContained {
+		.PrimaryBG { color: @button-contained-primary }
+		.PrimaryBG--Hover { color: @button-contained-primary-hover }
+		.PrimaryBG--Active { color: @button-contained-primary-active }
+		.PrimaryText { color: @on-button-contained-primary }
+	}
+}
+
+
+
+
+
+// @import "palette.less";
+// @import "semantic.less";
+// @import "contextual.less";

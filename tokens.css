@@ -1,0 +1,138 @@
+.Palette .Theme {
+  color: red;
+}
+.Palette .ThemeLight {
+  color: hsl(0, 30%, 92%);
+}
+.Palette .ThemeDark {
+  color: hsl(0, 100%, 12%);
+}
+.Palette .Neutral--100 {
+  color: #fff;
+}
+.Palette .Neutral--200 {
+  color: #E6E6E6;
+}
+.Palette .Neutral--300 {
+  color: #DBDBDB;
+}
+.Palette .Neutral--700 {
+  color: #31322E;
+}
+.Palette .Neutral--900 {
+  color: #000000;
+}
+.Semantic .Surface {
+  color: #fff;
+}
+.Semantic .Surface--Hover {
+  color: #e0e0e0;
+}
+.Semantic .Surface--Active {
+  color: #d6d6d6;
+}
+.Semantic .OnSurface {
+  color: hsl(0, 0%, 12%);
+}
+.Semantic .OnSurface--Weaker {
+  color: hsla(0, 0%, 12%, 0.56);
+}
+.Semantic .Canvas {
+  color: #E6E6E6;
+}
+.Semantic .OnCanvas {
+  color: hsl(0, 0%, 12%);
+}
+.Semantic .OnCanvas--Weaker {
+  color: hsla(0, 0%, 12%, 0.56);
+}
+.Semantic .Header {
+  color: red;
+}
+.Semantic .Header--Hover {
+  color: #ff1414;
+}
+.Semantic .Header--Active {
+  color: #ff2929;
+}
+.Semantic .OnHeader {
+  color: hsl(0, 30%, 92%);
+}
+.Semantic .OnHeader--Weaker {
+  color: hsla(0, 30%, 92%, 0.7);
+}
+.Semantic .Outcome {
+  color: aqua;
+}
+.Semantic .Outcome--Hover {
+  color: #00c2c2;
+}
+.Semantic .Outcome--Active {
+  color: #00adad;
+}
+.Semantic .OnOutcome {
+  color: hsl(180, 100%, 12%);
+}
+.Semantic .OnOutcome--Weaker {
+  color: hsla(180, 100%, 12%, 0.56);
+}
+.Semantic .Transaction {
+  color: #1DAC8A;
+}
+.Semantic .Transaction--Hover {
+  color: #20bd98;
+}
+.Semantic .Transaction--Active {
+  color: #23cfa6;
+}
+.Semantic .OnTransaction {
+  color: hsl(165.73426573, 30%, 92%);
+}
+.Semantic .OnTransaction--Weaker {
+  color: hsla(165.73426573, 30%, 92%, 0.7);
+}
+.Semantic .Highlight {
+  color: #FFA300;
+}
+.Semantic .Selected {
+  color: #FFA300;
+}
+.Semantic .Selected--Hover {
+  color: #c27c00;
+}
+.Semantic .Selected--Active {
+  color: #ad6f00;
+}
+.Semantic .OnSelected {
+  color: hsl(38.35294118, 100%, 12%);
+}
+.Semantic .OnSelected--Weaker {
+  color: hsla(38.35294118, 100%, 12%, 0.56);
+}
+.Semantic .Input {
+  color: red;
+}
+.Semantic .Input--Hover {
+  color: #ff1414;
+}
+.Semantic .Input--Active {
+  color: #ff2929;
+}
+.Semantic .Disabled {
+  color: #DBDBDB;
+}
+.Semantic .OnDisabled {
+  color: rgba(0, 0, 0, 0.24);
+}
+.Contextual .ButtonContained .PrimaryBG {
+  color: #fff;
+}
+.Contextual .ButtonContained .PrimaryBG--Hover {
+  color: #e0e0e0;
+}
+.Contextual .ButtonContained .PrimaryBG--Active {
+  color: #d6d6d6;
+}
+.Contextual .ButtonContained .PrimaryText {
+  color: hsl(0, 0%, 12%);
+}
