@@ -1,0 +1,339 @@
+.Palette .Theme {
+  color: #004370;
+}
+.Palette .ThemeLight {
+  color: hsl(204.10714286, 30%, 92%);
+}
+.Palette .ThemeDark {
+  color: hsl(204.10714286, 100%, 12%);
+}
+.Palette .Neutral--100 {
+  color: #FFF;
+}
+.Palette .Neutral--200 {
+  color: #E6E6E6;
+}
+.Palette .Neutral--300 {
+  color: #DBDBDB;
+}
+.Palette .Neutral--700 {
+  color: #31322E;
+}
+.Palette .Neutral--900 {
+  color: #000000;
+}
+.Semantic .Surface {
+  color: #000000;
+}
+.Semantic .OnSurface {
+  color: #ffffff;
+}
+.Semantic .OnSurface--Weaker {
+  color: #8f8f8f;
+}
+.Semantic .Canvas {
+  color: #31322E;
+}
+.Semantic .OnCanvas {
+  color: #ffffff;
+}
+.Semantic .OnCanvas--Weaker {
+  color: #a4a5a3;
+}
+.Semantic .Header {
+  color: #004370;
+}
+.Semantic .OnHeader {
+  color: #ffffff;
+}
+.Semantic .OnHeader--Weaker {
+  color: #8facc0;
+}
+.Semantic .Outcome {
+  color: hsl(204.10714286, 30%, 92%);
+}
+.Semantic .OnOutcome {
+  color: #1e1f1f;
+}
+.Semantic .OnOutcome--Weaker {
+  color: #595c5e;
+}
+.Semantic .Transaction {
+  color: #1DAC8A;
+}
+.Semantic .OnTransaction {
+  color: #ffffff;
+}
+.Semantic .OnTransaction--Weaker {
+  color: #9cdacc;
+}
+.Semantic .Highlight {
+  color: #FFA300;
+}
+.Semantic .Selected {
+  color: #FFA300;
+}
+.Semantic .OnSelected {
+  color: #211500;
+}
+.Semantic .OnSelected--Weaker {
+  color: #644000;
+}
+.Semantic .Input {
+  color: #004370;
+}
+.Semantic .Disabled {
+  color: #DBDBDB;
+}
+.Semantic .OnDisabled {
+  color: rgba(0, 0, 0, 0.24);
+}
+.Semantic .Success {
+  color: #009D4F;
+}
+.Semantic .Warning {
+  color: #FFD23B;
+}
+.Semantic .Danger {
+  color: #EF382B;
+}
+.Semantic .Info {
+  color: #666;
+}
+.Semantic .BetWon {
+  color: #009D4F;
+}
+.Semantic .OnBetWon {
+  color: #ffffff;
+}
+.Semantic .BetOpen {
+  color: #FFD23B;
+}
+.Semantic .OnBetOpen {
+  color: #211b08;
+}
+.Semantic .BetLost {
+  color: #EF382B;
+}
+.Semantic .OnBetLost {
+  color: #ffffff;
+}
+.Semantic .BetVoid {
+  color: #666;
+}
+.Semantic .OnBetVoid {
+  color: #ffffff;
+}
+.Semantic .CashOut {
+  color: #1DAC8A;
+}
+.Semantic .OnCashOut {
+  color: #ffffff;
+}
+.Semantic .OnCashOut--Weaker {
+  color: #9cdacc;
+}
+.Semantic .Oddsboost {
+  color: #00C1DE;
+}
+.Semantic .OnOddsboost {
+  color: #00191d;
+}
+.Semantic .Priceboost {
+  color: #00C1DE;
+}
+.Semantic .OnPriceboost {
+  color: #00191d;
+}
+.Semantic .Eachway {
+  color: #C93D79;
+}
+.Semantic .OnEachway {
+  color: #ffffff;
+}
+.Semantic .Teaserplus {
+  color: #C93D79;
+}
+.Semantic .OnTeaserplus {
+  color: #ffffff;
+}
+.Semantic .Live {
+  color: #ED1C34;
+}
+.Semantic .OnLive {
+  color: #ffffff;
+}
+.ButtonContained .PrimaryBG {
+  color: #000000;
+}
+.ButtonContained .PrimaryBG--Hover {
+  color: #00080d;
+}
+.ButtonContained .PrimaryBG--Active {
+  color: #000b12;
+}
+.ButtonContained .PrimaryText {
+  color: #004370;
+}
+.ButtonContained .PrimaryText--Hover {
+  color: #0068ad;
+}
+.ButtonContained .PrimaryText--Active {
+  color: #0074c2;
+}
+.ButtonContained .PrimaryText--Weaker {
+  color: #002f4e;
+}
+.ButtonContained .PrimaryText--Weaker--Hover {
+  color: #00548c;
+}
+.ButtonContained .PrimaryText--Weaker--Active {
+  color: #0060a0;
+}
+.ButtonContained .SecondaryBG {
+  color: hsl(204.10714286, 100%, 12%);
+}
+.ButtonContained .SecondaryBG--Hover {
+  color: #1f3f54;
+}
+.ButtonContained .SecondaryBG--Active {
+  color: #29485c;
+}
+.ButtonContained .SecondaryText {
+  color: #ffffff;
+}
+.ButtonContained .SecondaryText--Hover {
+  color: #ffffff;
+}
+.ButtonContained .SecondaryText--Active {
+  color: #ffffff;
+}
+.ButtonContained .SecondaryText--Weaker {
+  color: #8f9faa;
+}
+.ButtonContained .SecondaryText--Weaker--Hover {
+  color: #b2bdc4;
+}
+.ButtonContained .SecondaryText--Weaker--Active {
+  color: #bdc7cd;
+}
+.ButtonContained .DisabledBG {
+  color: #DBDBDB;
+}
+.ButtonContained .DisabledText {
+  color: rgba(0, 0, 0, 0.24);
+}
+.CollapsibleContainer .HeaderBG {
+  color: #004370;
+}
+.CollapsibleContainer .HeaderBG--Hover {
+  color: #1f5a81;
+}
+.CollapsibleContainer .HeaderBG--Active {
+  color: #296187;
+}
+.CollapsibleContainer .HeaderText {
+  color: #ffffff;
+}
+.CollapsibleContainer .HeaderText--Hover {
+  color: #ffffff;
+}
+.CollapsibleContainer .HeaderText--Active {
+  color: #ffffff;
+}
+.CollapsibleContainer .HeaderText--Weaker {
+  color: #8facc0;
+}
+.CollapsibleContainer .HeaderText--Weaker--Hover {
+  color: #b6c9d6;
+}
+.CollapsibleContainer .HeaderText--Weaker--Active {
+  color: #c3d3dd;
+}
+.EventList .ListItemBG {
+  color: #000000;
+}
+.EventList .ListItemBG--Hover {
+  color: #1f1f1f;
+}
+.EventList .ListItemBG--Active {
+  color: #292929;
+}
+.EventList .ListItemText {
+  color: #ffffff;
+}
+.EventList .ListItemText--Hover {
+  color: #ffffff;
+}
+.EventList .ListItemText--Active {
+  color: #ffffff;
+}
+.EventList .ListItemText--Weaker {
+  color: #8f8f8f;
+}
+.EventList .ListItemText--Weaker--Hover {
+  color: #adadad;
+}
+.EventList .ListItemText--Weaker--Active {
+  color: #b8b8b8;
+}
+.ButtonOutcome .DefaultBG {
+  color: hsl(204.10714286, 30%, 92%);
+}
+.ButtonOutcome .DefaultBG--Hover {
+  color: #dde4e8;
+}
+.ButtonOutcome .DefaultBG--Active {
+  color: #d5dbe0;
+}
+.ButtonOutcome .DefaultText {
+  color: #1e1f1f;
+}
+.ButtonOutcome .DefaultText--Hover {
+  color: #141415;
+}
+.ButtonOutcome .DefaultText--Active {
+  color: #0a0a0a;
+}
+.ButtonOutcome .DefaultText--Weaker {
+  color: #595c5e;
+}
+.ButtonOutcome .DefaultText--Weaker--Hover {
+  color: #4f5254;
+}
+.ButtonOutcome .DefaultText--Weaker--Active {
+  color: #454849;
+}
+.ButtonOutcome .SelectedBG {
+  color: #FFA300;
+}
+.ButtonOutcome .SelectedBG--Hover {
+  color: #f69d00;
+}
+.ButtonOutcome .SelectedBG--Active {
+  color: #ed9800;
+}
+.ButtonOutcome .SelectedText {
+  color: #211500;
+}
+.ButtonOutcome .SelectedText--Hover {
+  color: #0d0800;
+}
+.ButtonOutcome .SelectedText--Active {
+  color: #000000;
+}
+.ButtonOutcome .SelectedText--Weaker {
+  color: #644000;
+}
+.ButtonOutcome .SelectedText--Weaker--Hover {
+  color: #4f3300;
+}
+.ButtonOutcome .SelectedText--Weaker--Active {
+  color: #3b2600;
+}
+.ButtonOutcome .DisabledBG {
+  color: #DBDBDB;
+}
+.ButtonOutcome .DisabledText {
+  color: rgba(0, 0, 0, 0.24);
+}

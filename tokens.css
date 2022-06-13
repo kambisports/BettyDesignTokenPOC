@@ -1,14 +1,14 @@
 .Palette .Theme {
-  color: red;
+  color: #004370;
 }
 .Palette .ThemeLight {
-  color: hsl(0, 30%, 92%);
+  color: hsl(204.10714286, 100%, 92%);
 }
 .Palette .ThemeDark {
-  color: hsl(0, 100%, 12%);
+  color: hsl(204.10714286, 100%, 12%);
 }
 .Palette .Neutral--100 {
-  color: #fff;
+  color: #FFF;
 }
 .Palette .Neutral--200 {
   color: #E6E6E6;
@@ -23,7 +23,7 @@
   color: #000000;
 }
 .Semantic .Surface {
-  color: #fff;
+  color: #FFF;
 }
 .Semantic .Surface--Hover {
   color: #e0e0e0;
@@ -32,49 +32,85 @@
   color: #d6d6d6;
 }
 .Semantic .OnSurface {
-  color: hsl(0, 0%, 12%);
+  color: rgba(0, 0, 0, 0.87);
+}
+.Semantic .OnSurface--Hover {
+  color: rgba(0, 0, 0, 0.99);
+}
+.Semantic .OnSurface--Active {
+  color: #000000;
 }
 .Semantic .OnSurface--Weaker {
-  color: hsla(0, 0%, 12%, 0.56);
+  color: rgba(0, 0, 0, 0.56);
+}
+.Semantic .OnSurface--Weaker--Hover {
+  color: rgba(0, 0, 0, 0.68);
+}
+.Semantic .OnSurface--Weaker--Active {
+  color: rgba(0, 0, 0, 0.8);
 }
 .Semantic .Canvas {
   color: #E6E6E6;
 }
 .Semantic .OnCanvas {
-  color: hsl(0, 0%, 12%);
+  color: rgba(0, 0, 0, 0.87);
 }
 .Semantic .OnCanvas--Weaker {
-  color: hsla(0, 0%, 12%, 0.56);
+  color: rgba(0, 0, 0, 0.56);
 }
 .Semantic .Header {
-  color: red;
+  color: #004370;
 }
 .Semantic .Header--Hover {
-  color: #ff1414;
+  color: #004f84;
 }
 .Semantic .Header--Active {
-  color: #ff2929;
+  color: #005b99;
 }
 .Semantic .OnHeader {
-  color: hsl(0, 30%, 92%);
+  color: #ffffff;
+}
+.Semantic .OnHeader--Hover {
+  color: #ffffff;
+}
+.Semantic .OnHeader--Active {
+  color: #ffffff;
 }
 .Semantic .OnHeader--Weaker {
-  color: hsla(0, 30%, 92%, 0.7);
+  color: rgba(255, 255, 255, 0.7);
+}
+.Semantic .OnHeader--Weaker--Hover {
+  color: rgba(255, 255, 255, 0.78);
+}
+.Semantic .OnHeader--Weaker--Active {
+  color: rgba(255, 255, 255, 0.94);
 }
 .Semantic .Outcome {
-  color: aqua;
+  color: hsl(204.10714286, 100%, 92%);
 }
 .Semantic .Outcome--Hover {
-  color: #00c2c2;
+  color: hsl(204.10714286, 100%, 80%);
 }
 .Semantic .Outcome--Active {
-  color: #00adad;
+  color: hsl(204.10714286, 100%, 76%);
 }
 .Semantic .OnOutcome {
-  color: hsl(180, 100%, 12%);
+  color: rgba(0, 0, 0, 0.87);
+}
+.Semantic .OnOutcome--Hover {
+  color: rgba(0, 0, 0, 0.99);
+}
+.Semantic .OnOutcome--Active {
+  color: #000000;
 }
 .Semantic .OnOutcome--Weaker {
-  color: hsla(180, 100%, 12%, 0.56);
+  color: rgba(0, 0, 0, 0.56);
+}
+.Semantic .OnOutcome--Weaker--Hover {
+  color: rgba(0, 0, 0, 0.68);
+}
+.Semantic .OnOutcome--Weaker--Active {
+  color: rgba(0, 0, 0, 0.8);
 }
 .Semantic .Transaction {
   color: #1DAC8A;
@@ -86,10 +122,22 @@
   color: #23cfa6;
 }
 .Semantic .OnTransaction {
-  color: hsl(165.73426573, 30%, 92%);
+  color: #ffffff;
+}
+.Semantic .OnTransaction--Hover {
+  color: #ffffff;
+}
+.Semantic .OnTransaction--Active {
+  color: #ffffff;
 }
 .Semantic .OnTransaction--Weaker {
-  color: hsla(165.73426573, 30%, 92%, 0.7);
+  color: rgba(255, 255, 255, 0.7);
+}
+.Semantic .OnTransaction--Weaker--Hover {
+  color: rgba(255, 255, 255, 0.78);
+}
+.Semantic .OnTransaction--Weaker--Active {
+  color: rgba(255, 255, 255, 0.94);
 }
 .Semantic .Highlight {
   color: #FFA300;
@@ -104,19 +152,31 @@
   color: #ad6f00;
 }
 .Semantic .OnSelected {
-  color: hsl(38.35294118, 100%, 12%);
+  color: rgba(0, 0, 0, 0.87);
+}
+.Semantic .OnSelected--Hover {
+  color: rgba(0, 0, 0, 0.99);
+}
+.Semantic .OnSelected--Active {
+  color: #000000;
 }
 .Semantic .OnSelected--Weaker {
-  color: hsla(38.35294118, 100%, 12%, 0.56);
+  color: rgba(0, 0, 0, 0.56);
+}
+.Semantic .OnSelected--Weaker--Hover {
+  color: rgba(0, 0, 0, 0.68);
+}
+.Semantic .OnSelected--Weaker--Active {
+  color: rgba(0, 0, 0, 0.8);
 }
 .Semantic .Input {
-  color: red;
+  color: #004370;
 }
 .Semantic .Input--Hover {
-  color: #ff1414;
+  color: #004f84;
 }
 .Semantic .Input--Active {
-  color: #ff2929;
+  color: #005b99;
 }
 .Semantic .Disabled {
   color: #DBDBDB;
@@ -124,15 +184,156 @@
 .Semantic .OnDisabled {
   color: rgba(0, 0, 0, 0.24);
 }
+.Semantic .Success {
+  color: #009D4F;
+}
+.Semantic .Warning {
+  color: #FFD23B;
+}
+.Semantic .Danger {
+  color: #EF382B;
+}
+.Semantic .Info {
+  color: #666;
+}
+.Semantic .BetWon {
+  color: #009D4F;
+}
+.Semantic .OnBetWon {
+  color: #ffffff;
+}
+.Semantic .BetOpen {
+  color: #FFD23B;
+}
+.Semantic .OnBetOpen {
+  color: rgba(0, 0, 0, 0.87);
+}
+.Semantic .BetLost {
+  color: #EF382B;
+}
+.Semantic .OnBetLost {
+  color: #ffffff;
+}
+.Semantic .BetVoid {
+  color: #666;
+}
+.Semantic .OnBetVoid {
+  color: #ffffff;
+}
+.Semantic .CashOut {
+  color: #1DAC8A;
+}
+.Semantic .CashOut--Hover {
+  color: #20bd98;
+}
+.Semantic .CashOut--Active {
+  color: #23cfa6;
+}
+.Semantic .OnCashOut {
+  color: #ffffff;
+}
+.Semantic .OnCashOut--Hover {
+  color: #ffffff;
+}
+.Semantic .OnCashOut--Active {
+  color: #ffffff;
+}
+.Semantic .OnCashOut--Weaker {
+  color: rgba(255, 255, 255, 0.7);
+}
+.Semantic .OnCashOut--Weaker--Hover {
+  color: rgba(255, 255, 255, 0.78);
+}
+.Semantic .OnCashOut--Weaker--Active {
+  color: rgba(255, 255, 255, 0.94);
+}
+.Semantic .Oddsboost {
+  color: #00C1DE;
+}
+.Semantic .OnOddsboost {
+  color: rgba(0, 0, 0, 0.87);
+}
+.Semantic .Priceboost {
+  color: #00C1DE;
+}
+.Semantic .OnPriceboost {
+  color: rgba(0, 0, 0, 0.87);
+}
+.Semantic .Eachway {
+  color: #C93D79;
+}
+.Semantic .OnEachway {
+  color: #ffffff;
+}
+.Semantic .Teaserplus {
+  color: #C93D79;
+}
+.Semantic .OnTeaserplus {
+  color: #ffffff;
+}
+.Semantic .Live {
+  color: #ED1C34;
+}
+.Semantic .OnLive {
+  color: #ffffff;
+}
 .Contextual .ButtonContained .PrimaryBG {
-  color: #fff;
+  color: #FFF;
 }
 .Contextual .ButtonContained .PrimaryBG--Hover {
-  color: #e0e0e0;
+  color: #f5f7f9;
 }
 .Contextual .ButtonContained .PrimaryBG--Active {
-  color: #d6d6d6;
+  color: #ebf0f4;
 }
 .Contextual .ButtonContained .PrimaryText {
-  color: hsl(0, 0%, 12%);
+  color: #004370;
+}
+.Contextual .ButtonContained .PrimaryText--Hover {
+  color: #004370;
+}
+.Contextual .ButtonContained .PrimaryText--Active {
+  color: #004370;
+}
+.Contextual .ButtonContained .PrimaryText--Weaker {
+  color: #4d7b9b;
+}
+.Contextual .ButtonContained .PrimaryText--Weaker--Hover {
+  color: #4d7b9b;
+}
+.Contextual .ButtonContained .PrimaryText--Weaker--Active {
+  color: #4d7b9b;
+}
+.Contextual .ButtonContained .SecondaryBG {
+  color: hsl(204.10714286, 100%, 12%);
+}
+.Contextual .ButtonContained .SecondaryBG--Hover {
+  color: #1f3f54;
+}
+.Contextual .ButtonContained .SecondaryBG--Active {
+  color: #29485c;
+}
+.Contextual .ButtonContained .SecondaryText {
+  color: #ffffff;
+}
+.Contextual .ButtonContained .SecondaryText--Hover {
+  color: #ffffff;
+}
+.Contextual .ButtonContained .SecondaryText--Active {
+  color: #ffffff;
+}
+.Contextual .ButtonContained .SecondaryText--Weaker {
+  color: rgba(255, 255, 255, 0.7);
+}
+.Contextual .ButtonContained .SecondaryText--Weaker--Hover {
+  color: rgba(255, 255, 255, 0.78);
+}
+.Contextual .ButtonContained .SecondaryText--Weaker--Active {
+  color: rgba(255, 255, 255, 0.94);
+}
+.Contextual .ButtonContained .DisabledBG {
+  color: #DBDBDB;
+}
+.Contextual .ButtonContained .DisabledText {
+  color: rgba(0, 0, 0, 0.24);
 }

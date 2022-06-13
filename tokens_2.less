@@ -1,0 +1,475 @@
+///////////////////////////////
+///////////////////////////////
+// DOCUMENT OVERVIEW
+// - Presentation of Less built in functions used in this doc
+// - Mixins (Less functions) created for this doc
+// - Global Vars
+// - Palette Tokens
+// - Semantic Tokens
+// - Contextual Tokens
+///////////////////////////////
+///////////////////////////////
+
+
+///////////////////////////////
+///////////////////////////////
+// LESS BUILT IN FUNCTIONS
+///////////////////////////////
+
+////////
+// ALPHA
+// Add alpha channel to any color
+// Ex. fade(#000, 60) returns rgba(0, 0, 0, 0.60)
+// More here: https://lesscss.org/functions/#color-operations-fade
+
+////////
+// LIGHTEN
+// Increase the lightness of a color in the HSL color space
+// Note. you can feed it with any color space (hex, rgb, hsl, etc)
+// Ex. lighten(#333, 20) returns #666666 
+// More here: https://lesscss.org/functions/#color-operations-lighten
+
+////////
+// DARKEN
+// Increase the darkness of a color in the HSL color space
+// Note. you can feed it with any color space (hex, rgb, hsl, etc)
+// Ex. darken(#666, 20) returns #333333 
+// More here: https://lesscss.org/functions/#color-operations-darken
+
+////////
+// CONTRAST
+// Check contrast of any background and pick a color to use on it
+// Ex. contrast(@background, @dark-color, @light-color, @contrast-threshold) returns @light-color
+// More here: https://lesscss.org/functions/#color-operations-contrast
+
+
+///////////////////////////////
+///////////////////////////////
+// MIXINS
+///////////////////////////////
+
+.create-light-color (@color: red) {
+	// Check if the color has a lower or higher saturation than 30%. If it's more than 30% we set it to always be 30%. Else if it's less than 30%, we keep the saturaion value intact
+	@result: if( boolean(saturation(@color) < 30),  hsl(hue(@color),saturation(@color), 92%), hsl(hue(@color),30%, 92%) );
+}
+
+.create-dark-color (@color: red) {
+	// First we check if its a neutral (white, gray or black) color (zero saturation) or not in the boolean. If it's a neutral color we keep the saturation 0, otherwise set it to 100
+	@result: if( boolean(saturation(@color) = 0),  hsl(hue(@color),0%, 12%), hsl(hue(@color),100%, 12%) );
+}
+
+.create-on-color (@color: red) {
+	// Check if color is dark or light. If it's dark create a light on-color. And vice versa if it's light.
+	// Note to self
+	// Skapa en färg som utgår ifrån on-color 
+	@result: if( boolean(luma(@color) > @contrast-threshold), mix(@neutral-900, @color, @dark-alpha-900), mix(@neutral-100, @color, @light-alpha-900));
+}
+
+.create-on-weaker-color (@color: purple, @on-color: pink) {
+	// Check if color is dark or light. If it's dark create a darker variant of the on-color as the on-weaker. And vice versa if it's light.
+	@result: if( boolean(luma(@on-color) > @contrast-threshold), mix(@on-color, @color, @dark-alpha-700), mix(@on-color, @color, @light-alpha-700));
+}
+
+.create-color-hover (@color: purple, @on-color: pink) {
+	@result: if( boolean(luma(@color) > @contrast-threshold), mix(@on-color, @color, @hover-light), mix(@on-color, @color, @hover-dark));
+}
+
+.create-color-active (@color: purple, @on-color: pink) {
+	@result: if( boolean(luma(@color) > @contrast-threshold), mix(@on-color, @color, @active-light), mix(@on-color, @color, @active-dark));
+}
+
+.create-on-color-hover (@color: purple, @on-color: pink) {
+	@result: if( boolean(luma(@color) > @contrast-threshold), darken(@on-color, @hover-light), lighten(@on-color, @hover-dark));
+}
+
+.create-on-color-active (@color: purple, @on-color: pink) {
+	// @result: if( boolean(luma(@color) > @contrast-threshold), mix( @color, @on-color,@active-light), mix(@color, @on-color, @active-dark));
+	@result: if( boolean(luma(@color) > @contrast-threshold), darken(@on-color, @active-light), lighten(@on-color, @active-dark));
+}
+
+
+
+
+///////////////////////////////
+///////////////////////////////
+// GLOBAL VARS
+///////////////////////////////
+
+@contrast-threshold: 43%; // sets the threshold when checking contrast
+
+@hover-light: 4; // the amount we lighten a color on hover
+@active-light: 8; // the amount we lighten a color on active
+@hover-dark: 12; // the amount we darken a color on hover
+@active-dark: 16; // the amount we darken a color on active
+
+// Alpha scales - to use with both dark and light colors
+@dark-alpha-900: 87;
+@dark-alpha-700: 56;
+@dark-alpha-500: 36;
+@dark-alpha-300: 24;
+@dark-alpha-200: 12;
+@dark-alpha-100: 8;
+@dark-alpha-50: 4;
+
+@light-alpha-900: 100;
+@light-alpha-700: 70;
+@light-alpha-500: 40;
+@light-alpha-300: 24;
+@light-alpha-100: 12;
+@light-alpha-50: 4;
+
+
+///////////////////////////////
+///////////////////////////////
+// PALETTE TOKENS
+///////////////////////////////
+
+////////
+// Theme color
+// Set the main color of the theme
+@theme: #004370;
+@theme-light: .create-light-color(@theme)[@result];
+@theme-dark: .create-dark-color(@theme)[@result];
+
+////////
+// Neutrals
+// Solid colors for backgrounds or onProperties (together with alphas)
+@neutral-100: #FFF; // Surface,  Base for dark contrast onProperties tokens
+@neutral-200: #E6E6E6; // Canvas
+@neutral-300: #DBDBDB; // Disabled Button BG
+// @neutral-400: #fff; 
+@neutral-600: #666;  // Info (OnToaster)
+@neutral-700: #31322E; // Toaster BG
+// @neutral-800: #141414; //CanvasDark?
+@neutral-900: rgb(0, 0, 0); // Base for light contrast onProperties tokens
+
+
+////////
+// Generate palette styles for Figma (css)
+.Palette {
+	.Theme { color: @theme }
+	.ThemeLight { color: @theme-light }
+	.ThemeDark { color: @theme-dark }
+
+	.Neutral--100 { color: @neutral-100; }
+	.Neutral--200 { color: @neutral-200; }
+	.Neutral--300 { color: @neutral-300; }
+	.Neutral--700 { color: @neutral-700; }
+	.Neutral--900 { color: @neutral-900; }
+}
+
+///////////////////////////////
+////////////////////////////////
+// SEMANTIC TOKENS
+///////////////////////////////
+
+// Surface
+@surface: @neutral-900;
+@on-surface: .create-on-color (@surface)[@result];
+@on-surface-weaker: .create-on-weaker-color(@surface, @on-surface)[@result];
+
+// Canvas
+@canvas: @neutral-700;
+@on-canvas: .create-on-color (@canvas)[@result];
+@on-canvas-weaker: .create-on-weaker-color(@canvas, @on-canvas)[@result];
+
+// Header
+@header: @theme; 
+@on-header: .create-on-color (@header)[@result];
+@on-header-weaker: .create-on-weaker-color(@header, @on-header)[@result];
+
+// Outcome
+@outcome: @theme-light;
+@on-outcome: .create-on-color (@outcome)[@result];
+@on-outcome-weaker: .create-on-weaker-color(@outcome, @on-outcome)[@result];
+
+// Transaction
+@transaction: #1DAC8A;
+@on-transaction: .create-on-color (@transaction)[@result];
+@on-transaction-weaker: .create-on-weaker-color(@transaction, @on-transaction)[@result];
+
+// Highlight
+@highlight: #FFA300;
+
+// Selected
+@selected: @highlight;
+@on-selected: .create-on-color (@selected)[@result];
+@on-selected-weaker: .create-on-weaker-color(@selected, @on-selected)[@result];
+
+// Input
+@input: @theme;
+
+// Disabled
+@disabled: @neutral-300;
+@on-disabled: fade(@neutral-900, @dark-alpha-300);
+
+// Signal colors
+@success: #009D4F;
+@warning: #FFD23B;
+@danger: #EF382B;
+@info: @neutral-600;
+
+// Bet Indicators
+@bet-won: @success;
+@on-bet-won: .create-on-color (@bet-won)[@result];
+
+@bet-open: @warning;
+@on-bet-open: .create-on-color (@bet-open)[@result];
+
+@bet-lost: @danger;
+@on-bet-lost: .create-on-color (@bet-lost)[@result];
+
+@bet-void: @info;
+@on-bet-void: .create-on-color (@bet-void)[@result];
+
+//Cash Out
+@cashOut: @transaction;
+@on-cashOut: .create-on-color (@cashOut)[@result];
+@on-cashOut-weaker: .create-on-weaker-color(@cashOut, @on-cashOut)[@result];
+
+// Feature specific colors
+@oddsboost: #00C1DE; // spin(@theme, 72);
+@on-oddsboost: .create-on-color (@oddsboost)[@result];
+
+@priceboost: #00C1DE; //spin(@theme, 144);
+@on-priceboost: .create-on-color (@priceboost)[@result];
+
+@eachway: #C93D79; //spin(@theme, 216);
+@on-eachway: .create-on-color (@eachway)[@result];
+
+@teaserplus: #C93D79; //spin(@theme, 288);
+@on-teaserplus: .create-on-color (@teaserplus)[@result];
+
+@live: #ED1C34; // red;
+@on-live: .create-on-color (@live)[@result];
+
+////////
+// Generate semantic styles for Figma (css)
+.Semantic {
+	.Surface { color: @surface }
+	.OnSurface { color: @on-surface }
+	.OnSurface--Weaker { color: @on-surface-weaker }
+
+	.Canvas { color: @canvas }
+	.OnCanvas { color: @on-canvas }
+	.OnCanvas--Weaker { color: @on-canvas-weaker }
+
+	.Header { color: @header }
+	.OnHeader { color: @on-header }
+	.OnHeader--Weaker { color: @on-header-weaker }
+
+	.Outcome { color: @outcome }
+	.OnOutcome { color: @on-outcome }
+	.OnOutcome--Weaker { color: @on-outcome-weaker }
+
+	.Transaction { color: @transaction }
+	.OnTransaction { color: @on-transaction }
+	.OnTransaction--Weaker { color: @on-transaction-weaker }
+
+	.Highlight { color: @highlight }
+
+	.Selected { color: @selected }
+	.OnSelected { color: @on-selected }
+	.OnSelected--Weaker { color: @on-selected-weaker }
+
+	.Input { color: @input }
+
+	.Disabled { color: @disabled }
+	.OnDisabled { color: @on-disabled }
+
+	.Success { color: @success }
+	.Warning { color: @warning }
+	.Danger { color: @danger }
+	.Info { color: @info }
+
+	.BetWon {color: @bet-won}
+	.OnBetWon {color: @on-bet-won}
+
+	.BetOpen {color: @bet-open}
+	.OnBetOpen {color: @on-bet-open}
+
+	.BetLost {color: @bet-lost}
+	.OnBetLost {color: @on-bet-lost}
+
+	.BetVoid {color: @bet-void}
+	.OnBetVoid {color: @on-bet-void}
+
+	.CashOut { color: @cashOut }
+	.OnCashOut { color: @on-cashOut }
+	.OnCashOut--Weaker { color: @on-cashOut-weaker }
+
+	.Oddsboost {color: @oddsboost}
+	.OnOddsboost {color: @on-oddsboost}
+
+	.Priceboost {color: @priceboost}
+	.OnPriceboost {color: @on-priceboost}
+
+	.Eachway {color: @eachway}
+	.OnEachway {color: @on-eachway}
+
+	.Teaserplus {color: @teaserplus}
+	.OnTeaserplus {color: @on-teaserplus}
+
+	.Live {color: @live}
+	.OnLive {color: @on-live}
+}
+
+
+///////////////////////////////
+////////////////////////////////
+// CONTEXTUAL TOKENS
+///////////////////////////////
+
+// Button Contained - Default 
+@button-contained-primary: @surface;
+@on-button-contained-primary: @theme; //.create-on-color (@button-contained-primary)[@result];
+@on-button-contained-primary-weaker: .create-on-weaker-color(@button-contained-primary, @on-button-contained-primary)[@result];
+@button-contained-primary-hover: .create-color-hover(@button-contained-primary, @on-button-contained-primary)[@result];
+@button-contained-primary-active: .create-color-active(@button-contained-primary, @on-button-contained-primary)[@result];
+@on-button-contained-primary-hover: .create-on-color-hover(@button-contained-primary, @on-button-contained-primary)[@result];
+@on-button-contained-primary-active: .create-on-color-active(@button-contained-primary, @on-button-contained-primary)[@result];
+@on-button-contained-primary-weaker-hover: .create-on-color-hover(@button-contained-primary, @on-button-contained-primary-weaker)[@result];
+@on-button-contained-primary-weaker-active: .create-on-color-active(@button-contained-primary, @on-button-contained-primary-weaker)[@result];
+
+// // Button Contained - Selected 
+@button-contained-secondary: @theme-dark;
+@on-button-contained-secondary: .create-on-color (@button-contained-secondary)[@result];
+@on-button-contained-secondary-weaker: .create-on-weaker-color(@button-contained-secondary, @on-button-contained-secondary)[@result];
+@button-contained-secondary-hover: .create-color-hover(@button-contained-secondary, @on-button-contained-secondary)[@result];
+@button-contained-secondary-active: .create-color-active(@button-contained-secondary, @on-button-contained-secondary)[@result];
+@on-button-contained-secondary-hover: .create-on-color-hover(@button-contained-secondary, @on-button-contained-secondary)[@result];
+@on-button-contained-secondary-active: .create-on-color-active(@button-contained-secondary, @on-button-contained-secondary)[@result];
+@on-button-contained-secondary-weaker-hover: .create-on-color-hover(@button-contained-secondary, @on-button-contained-secondary-weaker)[@result];
+@on-button-contained-secondary-weaker-active: .create-on-color-active(@button-contained-secondary, @on-button-contained-secondary-weaker)[@result];
+
+// Button Contained - Disabled 
+@button-contained-disabled: @disabled;
+@on-button-contained-disabled: @on-disabled;
+
+// Header
+@collapsible-header: @header;
+@on-collapsible-header: @on-header;
+@on-collapsible-header-weaker: @on-header-weaker;
+@collapsible-header-hover: .create-color-hover(@collapsible-header, @on-collapsible-header)[@result];
+@collapsible-header-active: .create-color-active(@collapsible-header, @on-collapsible-header)[@result];
+@on-collapsible-header-hover: .create-on-color-hover(@collapsible-header, @on-collapsible-header)[@result];
+@on-collapsible-header-active: .create-on-color-active(@collapsible-header, @on-collapsible-header)[@result];
+@on-collapsible-header-weaker-hover: .create-on-color-hover(@collapsible-header, @on-collapsible-header-weaker)[@result];
+@on-collapsible-header-weaker-active: .create-on-color-active(@collapsible-header, @on-collapsible-header-weaker)[@result];
+
+// List Item
+@list-item: @surface;
+@on-list-item: @on-surface;
+@on-list-item-weaker: @on-surface-weaker;
+@list-item-hover: .create-color-hover(@list-item, @on-list-item)[@result];
+@list-item-active: .create-color-active(@list-item, @on-list-item)[@result];
+@on-list-item-hover: .create-on-color-hover(@list-item, @on-list-item)[@result];
+@on-list-item-active: .create-on-color-active(@list-item, @on-list-item)[@result];
+@on-list-item-weaker-hover: .create-on-color-hover(@list-item, @on-list-item-weaker)[@result];
+@on-list-item-weaker-active: .create-on-color-active(@list-item, @on-list-item-weaker)[@result];
+
+// Outcome - Default
+@outcome-default: @outcome;
+@on-outcome-default: @on-outcome;
+@on-outcome-default-weaker: @on-outcome-weaker;
+@outcome-default-hover: .create-color-hover(@outcome-default, @on-outcome-default)[@result];
+@outcome-default-active: .create-color-active(@outcome-default, @on-outcome-default)[@result];
+@on-outcome-default-hover: .create-on-color-hover(@outcome-default, @on-outcome-default)[@result];
+@on-outcome-default-active: .create-on-color-active(@outcome-default, @on-outcome-default)[@result];
+@on-outcome-default-weaker-hover: .create-on-color-hover(@outcome-default, @on-outcome-default-weaker)[@result];
+@on-outcome-default-weaker-active: .create-on-color-active(@outcome-default, @on-outcome-default-weaker)[@result];
+
+// Outcome - Default
+@outcome-selected: @selected;
+@on-outcome-selected: @on-selected;
+@on-outcome-selected-weaker: @on-selected-weaker;
+@outcome-selected-hover: .create-color-hover(@outcome-selected, @on-outcome-selected)[@result];
+@outcome-selected-active: .create-color-active(@outcome-selected, @on-outcome-selected)[@result];
+@on-outcome-selected-hover: .create-on-color-hover(@outcome-selected, @on-outcome-selected)[@result];
+@on-outcome-selected-active: .create-on-color-active(@outcome-selected, @on-outcome-selected)[@result];
+@on-outcome-selected-weaker-hover: .create-on-color-hover(@outcome-selected, @on-outcome-selected-weaker)[@result];
+@on-outcome-selected-weaker-active: .create-on-color-active(@outcome-selected, @on-outcome-selected-weaker)[@result];
+
+// Outcome - Default
+@outcome-disabled: @disabled;
+@on-outcome-disabled: @on-disabled;
+
+
+
+// ////////
+// // Generate contextual styles for Figma (css)
+// .Contextual {
+	.ButtonContained {
+		.PrimaryBG { color: @button-contained-primary }
+		.PrimaryBG--Hover { color: @button-contained-primary-hover }
+		.PrimaryBG--Active { color: @button-contained-primary-active }
+		.PrimaryText { color: @on-button-contained-primary }
+		.PrimaryText--Hover { color: @on-button-contained-primary-hover }
+		.PrimaryText--Active { color: @on-button-contained-primary-active }
+		.PrimaryText--Weaker { color: @on-button-contained-primary-weaker }
+		.PrimaryText--Weaker--Hover { color: @on-button-contained-primary-weaker-hover }
+		.PrimaryText--Weaker--Active { color: @on-button-contained-primary-weaker-active }
+
+		.SecondaryBG { color: @button-contained-secondary }
+		.SecondaryBG--Hover { color: @button-contained-secondary-hover }
+		.SecondaryBG--Active { color: @button-contained-secondary-active }
+		.SecondaryText { color: @on-button-contained-secondary }
+		.SecondaryText--Hover { color: @on-button-contained-secondary-hover }
+		.SecondaryText--Active { color: @on-button-contained-secondary-active }
+		.SecondaryText--Weaker { color: @on-button-contained-secondary-weaker }
+		.SecondaryText--Weaker--Hover { color: @on-button-contained-secondary-weaker-hover }
+		.SecondaryText--Weaker--Active { color: @on-button-contained-secondary-weaker-active }
+
+		.DisabledBG {color:@button-contained-disabled}
+		.DisabledText {color:@on-button-contained-disabled}
+	}
+
+	.CollapsibleContainer {
+		.HeaderBG { color: @collapsible-header }
+		.HeaderBG--Hover { color: @collapsible-header-hover }
+		.HeaderBG--Active { color: @collapsible-header-active }
+		.HeaderText { color: @on-collapsible-header }
+		.HeaderText--Hover { color: @on-collapsible-header-hover }
+		.HeaderText--Active { color: @on-collapsible-header-active }
+		.HeaderText--Weaker { color: @on-collapsible-header-weaker }
+		.HeaderText--Weaker--Hover { color: @on-collapsible-header-weaker-hover }
+		.HeaderText--Weaker--Active { color: @on-collapsible-header-weaker-active }
+	}
+
+	.EventList {
+		.ListItemBG { color: @list-item }
+		.ListItemBG--Hover { color: @list-item-hover }
+		.ListItemBG--Active { color: @list-item-active }
+		.ListItemText { color: @on-list-item }
+		.ListItemText--Hover { color: @on-list-item-hover }
+		.ListItemText--Active { color: @on-list-item-active }
+		.ListItemText--Weaker { color: @on-list-item-weaker }
+		.ListItemText--Weaker--Hover { color: @on-list-item-weaker-hover }
+		.ListItemText--Weaker--Active { color: @on-list-item-weaker-active }
+	}
+
+	.ButtonOutcome {
+		.DefaultBG { color: @outcome-default }
+		.DefaultBG--Hover { color: @outcome-default-hover }
+		.DefaultBG--Active { color: @outcome-default-active }
+		.DefaultText { color: @on-outcome-default }
+		.DefaultText--Hover { color: @on-outcome-default-hover }
+		.DefaultText--Active { color: @on-outcome-default-active }
+		.DefaultText--Weaker { color: @on-outcome-default-weaker }
+		.DefaultText--Weaker--Hover { color: @on-outcome-default-weaker-hover }
+		.DefaultText--Weaker--Active { color: @on-outcome-default-weaker-active }
+
+		.SelectedBG { color: @outcome-selected }
+		.SelectedBG--Hover { color: @outcome-selected-hover }
+		.SelectedBG--Active { color: @outcome-selected-active }
+		.SelectedText { color: @on-outcome-selected }
+		.SelectedText--Hover { color: @on-outcome-selected-hover }
+		.SelectedText--Active { color: @on-outcome-selected-active }
+		.SelectedText--Weaker { color: @on-outcome-selected-weaker }
+		.SelectedText--Weaker--Hover { color: @on-outcome-selected-weaker-hover }
+		.SelectedText--Weaker--Active { color: @on-outcome-selected-weaker-active }
+
+		.DisabledBG {color:@outcome-disabled}
+		.DisabledText {color:@on-outcome-disabled}
+	}
+// }
