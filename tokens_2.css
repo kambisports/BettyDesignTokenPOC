@@ -23,22 +23,22 @@
   color: #000000;
 }
 .Semantic .Surface {
-  color: #000000;
+  color: #FFF;
 }
 .Semantic .OnSurface {
-  color: #ffffff;
+  color: #212121;
 }
 .Semantic .OnSurface--Weaker {
-  color: #8f8f8f;
+  color: #646464;
 }
 .Semantic .Canvas {
-  color: #31322E;
+  color: #E6E6E6;
 }
 .Semantic .OnCanvas {
-  color: #ffffff;
+  color: #1e1e1e;
 }
 .Semantic .OnCanvas--Weaker {
-  color: #a4a5a3;
+  color: #5a5a5a;
 }
 .Semantic .Header {
   color: #004370;
@@ -163,177 +163,273 @@
 .Semantic .OnLive {
   color: #ffffff;
 }
-.ButtonContained .PrimaryBG {
-  color: #000000;
+.Client .ClientBg {
+  color: #E6E6E6;
 }
-.ButtonContained .PrimaryBG--Hover {
-  color: #00080d;
+.Client .ClientColor {
+  color: #1e1e1e;
 }
-.ButtonContained .PrimaryBG--Active {
-  color: #000b12;
+.Client .ClientColor--Weaker {
+  color: #5a5a5a;
 }
-.ButtonContained .PrimaryText {
+.ButtonContained .PrimaryBg {
+  color: #FFF;
+}
+.ButtonContained .PrimaryBg--Hover {
+  color: #ebf0f4;
+}
+.ButtonContained .PrimaryBg--Active {
+  color: #e0e8ee;
+}
+.ButtonContained .PrimaryColor {
   color: #004370;
 }
-.ButtonContained .PrimaryText--Hover {
-  color: #0068ad;
+.ButtonContained .PrimaryColor--Hover {
+  color: #002b47;
 }
-.ButtonContained .PrimaryText--Active {
-  color: #0074c2;
+.ButtonContained .PrimaryColor--Active {
+  color: #001e33;
 }
-.ButtonContained .PrimaryText--Weaker {
-  color: #002f4e;
+.ButtonContained .PrimaryColor--Weaker {
+  color: #4d7b9b;
 }
-.ButtonContained .PrimaryText--Weaker--Hover {
-  color: #00548c;
+.ButtonContained .PrimaryColor--Weaker--Hover {
+  color: #3f6680;
 }
-.ButtonContained .PrimaryText--Weaker--Active {
-  color: #0060a0;
+.ButtonContained .PrimaryColor--Weaker--Active {
+  color: #385b72;
 }
-.ButtonContained .SecondaryBG {
+.ButtonContained .SecondaryBg {
   color: hsl(204.10714286, 100%, 12%);
 }
-.ButtonContained .SecondaryBG--Hover {
-  color: #1f3f54;
+.ButtonContained .SecondaryBg--Hover {
+  color: hsl(204.10714286, 100%, 24%);
 }
-.ButtonContained .SecondaryBG--Active {
-  color: #29485c;
+.ButtonContained .SecondaryBg--Active {
+  color: hsl(204.10714286, 100%, 28%);
 }
-.ButtonContained .SecondaryText {
+.ButtonContained .SecondaryColor {
   color: #ffffff;
 }
-.ButtonContained .SecondaryText--Hover {
+.ButtonContained .SecondaryColor--Hover {
   color: #ffffff;
 }
-.ButtonContained .SecondaryText--Active {
+.ButtonContained .SecondaryColor--Active {
   color: #ffffff;
 }
-.ButtonContained .SecondaryText--Weaker {
+.ButtonContained .SecondaryColor--Weaker {
   color: #8f9faa;
 }
-.ButtonContained .SecondaryText--Weaker--Hover {
+.ButtonContained .SecondaryColor--Weaker--Hover {
   color: #b2bdc4;
 }
-.ButtonContained .SecondaryText--Weaker--Active {
+.ButtonContained .SecondaryColor--Weaker--Active {
   color: #bdc7cd;
 }
-.ButtonContained .DisabledBG {
+.ButtonContained .CtaBg {
+  color: #1DAC8A;
+}
+.ButtonContained .CtaBg--Hover {
+  color: #2bdbb1;
+}
+.ButtonContained .CtaBg--Active {
+  color: #3cdeb8;
+}
+.ButtonContained .CtaColor {
+  color: #ffffff;
+}
+.ButtonContained .CtaColor--Hover {
+  color: #ffffff;
+}
+.ButtonContained .CtaColor--Active {
+  color: #ffffff;
+}
+.ButtonContained .CtaColor--Weaker {
+  color: #9cdacc;
+}
+.ButtonContained .CtaColor--Weaker--Hover {
+  color: #c8ebe3;
+}
+.ButtonContained .CtaColor--Weaker--Active {
+  color: #d7f0ea;
+}
+.ButtonContained .DisabledBg {
   color: #DBDBDB;
 }
-.ButtonContained .DisabledText {
+.ButtonContained .DisabledColor {
   color: rgba(0, 0, 0, 0.24);
 }
-.CollapsibleContainer .HeaderBG {
+.ButtonText .PrimaryBg {
+  color: rgba(255, 255, 255, 0);
+}
+.ButtonText .PrimaryBg--Hover {
+  color: rgba(0, 67, 112, 0.12);
+}
+.ButtonText .PrimaryBg--Active {
+  color: rgba(0, 67, 112, 0.16);
+}
+.ButtonText .PrimaryColor {
   color: #004370;
 }
-.CollapsibleContainer .HeaderBG--Hover {
-  color: #1f5a81;
+.ButtonText .PrimaryColor--Hover {
+  color: #002b47;
 }
-.CollapsibleContainer .HeaderBG--Active {
-  color: #296187;
+.ButtonText .PrimaryColor--Active {
+  color: #001e33;
 }
-.CollapsibleContainer .HeaderText {
+.ButtonText .PrimaryColor--Weaker {
+  color: rgba(0, 67, 112, 0.7);
+}
+.ButtonText .PrimaryColor--Weaker--Hover {
+  color: rgba(0, 43, 71, 0.7);
+}
+.ButtonText .PrimaryColor--Weaker--Active {
+  color: rgba(0, 30, 51, 0.7);
+}
+.ButtonText .SecondaryBg {
+  color: rgba(255, 255, 255, 0);
+}
+.ButtonText .SecondaryBg--Hover {
+  color: rgba(86, 86, 86, 0.1044);
+}
+.ButtonText .SecondaryBg--Active {
+  color: rgba(68, 68, 68, 0.1392);
+}
+.ButtonText .SecondaryColor {
+  color: rgba(0, 0, 0, 0.87);
+}
+.ButtonText .SecondaryColor--Hover {
+  color: rgba(0, 0, 0, 0.87);
+}
+.ButtonText .SecondaryColor--Active {
+  color: rgba(0, 0, 0, 0.87);
+}
+.ButtonText .SecondaryColor--Weaker {
+  color: rgba(7, 7, 7, 0.609);
+}
+.ButtonText .SecondaryColor--Weaker--Hover {
+  color: rgba(0, 0, 0, 0.609);
+}
+.ButtonText .SecondaryColor--Weaker--Active {
+  color: rgba(0, 0, 0, 0.609);
+}
+.ButtonText .DisabledBg {
+  color: rgba(255, 255, 255, 0);
+}
+.ButtonText .DisabledColor {
+  color: rgba(0, 0, 0, 0.24);
+}
+.CollapsibleContainer .HeaderBg {
+  color: #004370;
+}
+.CollapsibleContainer .HeaderBg--Hover {
+  color: #0068ad;
+}
+.CollapsibleContainer .HeaderBg--Active {
+  color: #0074c2;
+}
+.CollapsibleContainer .HeaderColor {
   color: #ffffff;
 }
-.CollapsibleContainer .HeaderText--Hover {
+.CollapsibleContainer .HeaderColor--Hover {
   color: #ffffff;
 }
-.CollapsibleContainer .HeaderText--Active {
+.CollapsibleContainer .HeaderColor--Active {
   color: #ffffff;
 }
-.CollapsibleContainer .HeaderText--Weaker {
+.CollapsibleContainer .HeaderColor--Weaker {
   color: #8facc0;
 }
-.CollapsibleContainer .HeaderText--Weaker--Hover {
+.CollapsibleContainer .HeaderColor--Weaker--Hover {
   color: #b6c9d6;
 }
-.CollapsibleContainer .HeaderText--Weaker--Active {
+.CollapsibleContainer .HeaderColor--Weaker--Active {
   color: #c3d3dd;
 }
-.EventList .ListItemBG {
-  color: #000000;
+.EventList .ListItemBg {
+  color: #FFF;
 }
-.EventList .ListItemBG--Hover {
-  color: #1f1f1f;
+.EventList .ListItemBg--Hover {
+  color: #ededed;
 }
-.EventList .ListItemBG--Active {
-  color: #292929;
+.EventList .ListItemBg--Active {
+  color: #e4e4e4;
 }
-.EventList .ListItemText {
-  color: #ffffff;
+.EventList .ListItemColor {
+  color: #212121;
 }
-.EventList .ListItemText--Hover {
-  color: #ffffff;
+.EventList .ListItemColor--Hover {
+  color: #0d0d0d;
 }
-.EventList .ListItemText--Active {
-  color: #ffffff;
+.EventList .ListItemColor--Active {
+  color: #030303;
 }
-.EventList .ListItemText--Weaker {
-  color: #8f8f8f;
+.EventList .ListItemColor--Weaker {
+  color: #646464;
 }
-.EventList .ListItemText--Weaker--Hover {
-  color: #adadad;
+.EventList .ListItemColor--Weaker--Hover {
+  color: #4f4f4f;
 }
-.EventList .ListItemText--Weaker--Active {
-  color: #b8b8b8;
+.EventList .ListItemColor--Weaker--Active {
+  color: #454545;
 }
-.ButtonOutcome .DefaultBG {
+.ButtonOutcome .DefaultBg {
   color: hsl(204.10714286, 30%, 92%);
 }
-.ButtonOutcome .DefaultBG--Hover {
-  color: #dde4e8;
+.ButtonOutcome .DefaultBg--Hover {
+  color: hsl(204.10714286, 30%, 84%);
 }
-.ButtonOutcome .DefaultBG--Active {
-  color: #d5dbe0;
+.ButtonOutcome .DefaultBg--Active {
+  color: hsl(204.10714286, 30%, 80%);
 }
-.ButtonOutcome .DefaultText {
+.ButtonOutcome .DefaultColor {
   color: #1e1f1f;
 }
-.ButtonOutcome .DefaultText--Hover {
-  color: #141415;
-}
-.ButtonOutcome .DefaultText--Active {
+.ButtonOutcome .DefaultColor--Hover {
   color: #0a0a0a;
 }
-.ButtonOutcome .DefaultText--Weaker {
-  color: #595c5e;
-}
-.ButtonOutcome .DefaultText--Weaker--Hover {
-  color: #4f5254;
-}
-.ButtonOutcome .DefaultText--Weaker--Active {
-  color: #454849;
-}
-.ButtonOutcome .SelectedBG {
-  color: #FFA300;
-}
-.ButtonOutcome .SelectedBG--Hover {
-  color: #f69d00;
-}
-.ButtonOutcome .SelectedBG--Active {
-  color: #ed9800;
-}
-.ButtonOutcome .SelectedText {
-  color: #211500;
-}
-.ButtonOutcome .SelectedText--Hover {
-  color: #0d0800;
-}
-.ButtonOutcome .SelectedText--Active {
+.ButtonOutcome .DefaultColor--Active {
   color: #000000;
 }
-.ButtonOutcome .SelectedText--Weaker {
+.ButtonOutcome .DefaultColor--Weaker {
+  color: #595c5e;
+}
+.ButtonOutcome .DefaultColor--Weaker--Hover {
+  color: #454849;
+}
+.ButtonOutcome .DefaultColor--Weaker--Active {
+  color: #3c3d3f;
+}
+.ButtonOutcome .SelectedBg {
+  color: #FFA300;
+}
+.ButtonOutcome .SelectedBg--Hover {
+  color: #d68900;
+}
+.ButtonOutcome .SelectedBg--Active {
+  color: #c27c00;
+}
+.ButtonOutcome .SelectedColor {
+  color: #211500;
+}
+.ButtonOutcome .SelectedColor--Hover {
+  color: #000000;
+}
+.ButtonOutcome .SelectedColor--Active {
+  color: #000000;
+}
+.ButtonOutcome .SelectedColor--Weaker {
   color: #644000;
 }
-.ButtonOutcome .SelectedText--Weaker--Hover {
-  color: #4f3300;
-}
-.ButtonOutcome .SelectedText--Weaker--Active {
+.ButtonOutcome .SelectedColor--Weaker--Hover {
   color: #3b2600;
 }
-.ButtonOutcome .DisabledBG {
+.ButtonOutcome .SelectedColor--Weaker--Active {
+  color: #271900;
+}
+.ButtonOutcome .DisabledBg {
   color: #DBDBDB;
 }
-.ButtonOutcome .DisabledText {
+.ButtonOutcome .DisabledColor {
   color: rgba(0, 0, 0, 0.24);
 }

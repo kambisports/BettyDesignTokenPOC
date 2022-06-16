@@ -54,15 +54,14 @@
 }
 
 .create-dark-color (@color: red) {
-	// First we check if its a neutral (white, gray or black) color (zero saturation) or not in the boolean. If it's a neutral color we keep the saturation 0, otherwise set it to 100
+	// First we check if its a neutral (white, gray or black) color (zero saturation) or not. If it's a neutral color we keep the saturation 0, otherwise set it to 100
 	@result: if( boolean(saturation(@color) = 0),  hsl(hue(@color),0%, 12%), hsl(hue(@color),100%, 12%) );
 }
 
 .create-on-color (@color: red) {
-	// Check if color is dark or light. If it's dark create a light on-color. And vice versa if it's light.
-	// Note to self
-	// Skapa en färg som utgår ifrån on-color 
-	@result: if( boolean(luma(@color) > @contrast-threshold), mix(@neutral-900, @color, @dark-alpha-900), mix(@neutral-100, @color, @light-alpha-900));
+	// Check if color is dark or light. If it's dark create a light on-color. And vice versa if it's light. Make sure we check against a solid color, otherwise it will include alpha in luma check.
+	@color-solid: fade(@color, 100%);
+	@result: if( boolean(luma(@color-solid) > @contrast-threshold), mix(@neutral-900, @color, @dark-alpha-900), mix(@neutral-100, @color, @light-alpha-900));
 }
 
 .create-on-weaker-color (@color: purple, @on-color: pink) {
@@ -71,23 +70,35 @@
 }
 
 .create-color-hover (@color: purple, @on-color: pink) {
-	@result: if( boolean(luma(@color) > @contrast-threshold), mix(@on-color, @color, @hover-light), mix(@on-color, @color, @hover-dark));
+	// Check if @color is dark or light. Make sure we check against a solid color, otherwise it will include alpha in checks.
+	// Then if @color is black or white we use a function to create hover state mixed with the on-color
+	// If @color is colored we use normal darken or lighten to create the hover state.
+	@color-solid: fade(@color, 100%); 
+	@is-black-or-white: if((rgb(@color-solid) = #000) or (rgb(@color-solid) = #FFF), true, false);
+	@use-black-or-white-bg: if( boolean(luma(@color) > @contrast-threshold), mix(@on-color, @color, @hover-light), mix(@on-color, @color, @hover-dark));
+	@use-colored-bg: if( boolean(luma(@color-solid) > @contrast-threshold), darken(@color, @hover-light), lighten(@color, @hover-dark));
+	@result: if(@is-black-or-white, @use-black-or-white-bg, @use-colored-bg);
 }
 
 .create-color-active (@color: purple, @on-color: pink) {
-	@result: if( boolean(luma(@color) > @contrast-threshold), mix(@on-color, @color, @active-light), mix(@on-color, @color, @active-dark));
+	@color-solid: fade(@color, 100%); // Make @color temporarily solid - for validation only 
+	@is-black-or-white: if((rgb(@color-solid) = #000) or (rgb(@color-solid) = #FFF), true, false);
+	@use-black-or-white-bg: if( boolean(luma(@color) > @contrast-threshold), mix(@on-color, @color, @active-light), mix(@on-color, @color, @active-dark));
+	@use-colored-bg: if( boolean(luma(@color-solid) > @contrast-threshold), darken(@color, @active-light), lighten(@color, @active-dark));
+	@result: if(@is-black-or-white, @use-black-or-white-bg, @use-colored-bg);
 }
 
 .create-on-color-hover (@color: purple, @on-color: pink) {
-	@result: if( boolean(luma(@color) > @contrast-threshold), darken(@on-color, @hover-light), lighten(@on-color, @hover-dark));
+	// Check if @color is dark or light. If it's dark create a lighter on-color. And vice versa if it's light. Make sure we check against a solid color, otherwise it will include alpha in luma check.
+	@color-solid: fade(@color, 100%);
+	@result: if( boolean(luma(@color-solid) > @contrast-threshold), darken(@on-color, @hover-light), lighten(@on-color, @hover-dark));
 }
 
 .create-on-color-active (@color: purple, @on-color: pink) {
-	// @result: if( boolean(luma(@color) > @contrast-threshold), mix( @color, @on-color,@active-light), mix(@color, @on-color, @active-dark));
-	@result: if( boolean(luma(@color) > @contrast-threshold), darken(@on-color, @active-light), lighten(@on-color, @active-dark));
+	// Check if @color is dark or light. If it's dark create a lighter on-color. And vice versa if it's light. Make sure we check against a solid color, otherwise it will include alpha in luma check.
+	@color-solid: fade(@color, 100%);
+	@result: if( boolean(luma(@color-solid) > @contrast-threshold), darken(@on-color, @active-light), lighten(@on-color, @active-dark));
 }
-
-
 
 
 ///////////////////////////////
@@ -97,8 +108,8 @@
 
 @contrast-threshold: 43%; // sets the threshold when checking contrast
 
-@hover-light: 4; // the amount we lighten a color on hover
-@active-light: 8; // the amount we lighten a color on active
+@hover-light: 8; // the amount we lighten a color on hover
+@active-light: 12; // the amount we lighten a color on active
 @hover-dark: 12; // the amount we darken a color on hover
 @active-dark: 16; // the amount we darken a color on active
 
@@ -164,12 +175,12 @@
 ///////////////////////////////
 
 // Surface
-@surface: @neutral-900;
+@surface: @neutral-100;
 @on-surface: .create-on-color (@surface)[@result];
 @on-surface-weaker: .create-on-weaker-color(@surface, @on-surface)[@result];
 
 // Canvas
-@canvas: @neutral-700;
+@canvas: @neutral-200;
 @on-canvas: .create-on-color (@canvas)[@result];
 @on-canvas-weaker: .create-on-weaker-color(@canvas, @on-canvas)[@result];
 
@@ -320,7 +331,13 @@
 // CONTEXTUAL TOKENS
 ///////////////////////////////
 
-// Button Contained - Default 
+// Client
+@client: @canvas;
+@on-client: .create-on-color (@client)[@result];
+@on-client-weaker: .create-on-weaker-color(@canvas, @on-canvas)[@result];
+
+
+// Button Contained - Primary 
 @button-contained-primary: @surface;
 @on-button-contained-primary: @theme; //.create-on-color (@button-contained-primary)[@result];
 @on-button-contained-primary-weaker: .create-on-weaker-color(@button-contained-primary, @on-button-contained-primary)[@result];
@@ -331,7 +348,7 @@
 @on-button-contained-primary-weaker-hover: .create-on-color-hover(@button-contained-primary, @on-button-contained-primary-weaker)[@result];
 @on-button-contained-primary-weaker-active: .create-on-color-active(@button-contained-primary, @on-button-contained-primary-weaker)[@result];
 
-// // Button Contained - Selected 
+// Button Contained - Secondary 
 @button-contained-secondary: @theme-dark;
 @on-button-contained-secondary: .create-on-color (@button-contained-secondary)[@result];
 @on-button-contained-secondary-weaker: .create-on-weaker-color(@button-contained-secondary, @on-button-contained-secondary)[@result];
@@ -342,9 +359,46 @@
 @on-button-contained-secondary-weaker-hover: .create-on-color-hover(@button-contained-secondary, @on-button-contained-secondary-weaker)[@result];
 @on-button-contained-secondary-weaker-active: .create-on-color-active(@button-contained-secondary, @on-button-contained-secondary-weaker)[@result];
 
+// Button Contained - CTA 
+@button-contained-cta: @transaction;
+@on-button-contained-cta: .create-on-color (@button-contained-cta)[@result];
+@on-button-contained-cta-weaker: .create-on-weaker-color(@button-contained-cta, @on-button-contained-cta)[@result];
+@button-contained-cta-hover: .create-color-hover(@button-contained-cta, @on-button-contained-cta)[@result];
+@button-contained-cta-active: .create-color-active(@button-contained-cta, @on-button-contained-cta)[@result];
+@on-button-contained-cta-hover: .create-on-color-hover(@button-contained-cta, @on-button-contained-cta)[@result];
+@on-button-contained-cta-active: .create-on-color-active(@button-contained-cta, @on-button-contained-cta)[@result];
+@on-button-contained-cta-weaker-hover: .create-on-color-hover(@button-contained-cta, @on-button-contained-cta-weaker)[@result];
+@on-button-contained-cta-weaker-active: .create-on-color-active(@button-contained-cta, @on-button-contained-cta-weaker)[@result];
+
 // Button Contained - Disabled 
 @button-contained-disabled: @disabled;
 @on-button-contained-disabled: @on-disabled;
+
+// Button Text - Primary 
+@button-text-primary: rgba(255, 255, 255, .0);
+@on-button-text-primary: @theme; //.create-on-color (@button-text-primary)[@result];
+@on-button-text-primary-weaker: .create-on-weaker-color(@button-text-primary, @on-button-text-primary)[@result];
+@button-text-primary-hover: .create-color-hover(@button-text-primary, @on-button-text-primary)[@result];
+@button-text-primary-active: .create-color-active(@button-text-primary, @on-button-text-primary)[@result];
+@on-button-text-primary-hover: .create-on-color-hover(@button-text-primary, @on-button-text-primary)[@result];
+@on-button-text-primary-active: .create-on-color-active(@button-text-primary, @on-button-text-primary)[@result];
+@on-button-text-primary-weaker-hover: .create-on-color-hover(@button-text-primary, @on-button-text-primary-weaker)[@result];
+@on-button-text-primary-weaker-active: .create-on-color-active(@button-text-primary, @on-button-text-primary-weaker)[@result];
+
+// Button Text - Secondary 
+@button-text-secondary: rgba(255, 255, 255, .0);
+@on-button-text-secondary: .create-on-color (@button-text-secondary)[@result];
+@on-button-text-secondary-weaker: .create-on-weaker-color(@button-text-secondary, @on-button-text-secondary)[@result];
+@button-text-secondary-hover: .create-color-hover(@button-text-secondary, @on-button-text-secondary)[@result];
+@button-text-secondary-active: .create-color-active(@button-text-secondary, @on-button-text-secondary)[@result];
+@on-button-text-secondary-hover: .create-on-color-hover(@button-text-secondary, @on-button-text-secondary)[@result];
+@on-button-text-secondary-active: .create-on-color-active(@button-text-secondary, @on-button-text-secondary)[@result];
+@on-button-text-secondary-weaker-hover: .create-on-color-hover(@button-text-secondary, @on-button-text-secondary-weaker)[@result];
+@on-button-text-secondary-weaker-active: .create-on-color-active(@button-text-secondary, @on-button-text-secondary-weaker)[@result];
+
+// Button Text - Disabled 
+@button-text-disabled: rgba(255,255,255, 0);
+@on-button-text-disabled: @on-disabled;
 
 // Header
 @collapsible-header: @header;
@@ -399,77 +453,119 @@
 // ////////
 // // Generate contextual styles for Figma (css)
 // .Contextual {
+
+	.Client {
+		.ClientBg { color: @client }
+		.ClientColor { color: @on-client }
+		.ClientColor--Weaker { color: @on-client-weaker }
+	}
+
 	.ButtonContained {
-		.PrimaryBG { color: @button-contained-primary }
-		.PrimaryBG--Hover { color: @button-contained-primary-hover }
-		.PrimaryBG--Active { color: @button-contained-primary-active }
-		.PrimaryText { color: @on-button-contained-primary }
-		.PrimaryText--Hover { color: @on-button-contained-primary-hover }
-		.PrimaryText--Active { color: @on-button-contained-primary-active }
-		.PrimaryText--Weaker { color: @on-button-contained-primary-weaker }
-		.PrimaryText--Weaker--Hover { color: @on-button-contained-primary-weaker-hover }
-		.PrimaryText--Weaker--Active { color: @on-button-contained-primary-weaker-active }
+		.PrimaryBg { color: @button-contained-primary }
+		.PrimaryBg--Hover { color: @button-contained-primary-hover }
+		.PrimaryBg--Active { color: @button-contained-primary-active }
+		.PrimaryColor { color: @on-button-contained-primary }
+		.PrimaryColor--Hover { color: @on-button-contained-primary-hover }
+		.PrimaryColor--Active { color: @on-button-contained-primary-active }
+		.PrimaryColor--Weaker { color: @on-button-contained-primary-weaker }
+		.PrimaryColor--Weaker--Hover { color: @on-button-contained-primary-weaker-hover }
+		.PrimaryColor--Weaker--Active { color: @on-button-contained-primary-weaker-active }
 
-		.SecondaryBG { color: @button-contained-secondary }
-		.SecondaryBG--Hover { color: @button-contained-secondary-hover }
-		.SecondaryBG--Active { color: @button-contained-secondary-active }
-		.SecondaryText { color: @on-button-contained-secondary }
-		.SecondaryText--Hover { color: @on-button-contained-secondary-hover }
-		.SecondaryText--Active { color: @on-button-contained-secondary-active }
-		.SecondaryText--Weaker { color: @on-button-contained-secondary-weaker }
-		.SecondaryText--Weaker--Hover { color: @on-button-contained-secondary-weaker-hover }
-		.SecondaryText--Weaker--Active { color: @on-button-contained-secondary-weaker-active }
+		.SecondaryBg { color: @button-contained-secondary }
+		.SecondaryBg--Hover { color: @button-contained-secondary-hover }
+		.SecondaryBg--Active { color: @button-contained-secondary-active }
+		.SecondaryColor { color: @on-button-contained-secondary }
+		.SecondaryColor--Hover { color: @on-button-contained-secondary-hover }
+		.SecondaryColor--Active { color: @on-button-contained-secondary-active }
+		.SecondaryColor--Weaker { color: @on-button-contained-secondary-weaker }
+		.SecondaryColor--Weaker--Hover { color: @on-button-contained-secondary-weaker-hover }
+		.SecondaryColor--Weaker--Active { color: @on-button-contained-secondary-weaker-active }
 
-		.DisabledBG {color:@button-contained-disabled}
-		.DisabledText {color:@on-button-contained-disabled}
+		.CtaBg { color: @button-contained-cta }
+		.CtaBg--Hover { color: @button-contained-cta-hover }
+		.CtaBg--Active { color: @button-contained-cta-active }
+		.CtaColor { color: @on-button-contained-cta }
+		.CtaColor--Hover { color: @on-button-contained-cta-hover }
+		.CtaColor--Active { color: @on-button-contained-cta-active }
+		.CtaColor--Weaker { color: @on-button-contained-cta-weaker }
+		.CtaColor--Weaker--Hover { color: @on-button-contained-cta-weaker-hover }
+		.CtaColor--Weaker--Active { color: @on-button-contained-cta-weaker-active }
+
+		.DisabledBg {color:@button-contained-disabled}
+		.DisabledColor {color:@on-button-contained-disabled}
+	}
+
+	.ButtonText {
+		.PrimaryBg { color: @button-text-primary }
+		.PrimaryBg--Hover { color: @button-text-primary-hover }
+		.PrimaryBg--Active { color: @button-text-primary-active }
+		.PrimaryColor { color: @on-button-text-primary }
+		.PrimaryColor--Hover { color: @on-button-text-primary-hover }
+		.PrimaryColor--Active { color: @on-button-text-primary-active }
+		.PrimaryColor--Weaker { color: @on-button-text-primary-weaker }
+		.PrimaryColor--Weaker--Hover { color: @on-button-text-primary-weaker-hover }
+		.PrimaryColor--Weaker--Active { color: @on-button-text-primary-weaker-active }
+
+		.SecondaryBg { color: @button-text-secondary }
+		.SecondaryBg--Hover { color: @button-text-secondary-hover }
+		.SecondaryBg--Active { color: @button-text-secondary-active }
+		.SecondaryColor { color: @on-button-text-secondary }
+		.SecondaryColor--Hover { color: @on-button-text-secondary-hover }
+		.SecondaryColor--Active { color: @on-button-text-secondary-active }
+		.SecondaryColor--Weaker { color: @on-button-text-secondary-weaker }
+		.SecondaryColor--Weaker--Hover { color: @on-button-text-secondary-weaker-hover }
+		.SecondaryColor--Weaker--Active { color: @on-button-text-secondary-weaker-active }
+
+		.DisabledBg {color:@button-text-disabled}
+		.DisabledColor {color:@on-button-text-disabled}
 	}
 
 	.CollapsibleContainer {
-		.HeaderBG { color: @collapsible-header }
-		.HeaderBG--Hover { color: @collapsible-header-hover }
-		.HeaderBG--Active { color: @collapsible-header-active }
-		.HeaderText { color: @on-collapsible-header }
-		.HeaderText--Hover { color: @on-collapsible-header-hover }
-		.HeaderText--Active { color: @on-collapsible-header-active }
-		.HeaderText--Weaker { color: @on-collapsible-header-weaker }
-		.HeaderText--Weaker--Hover { color: @on-collapsible-header-weaker-hover }
-		.HeaderText--Weaker--Active { color: @on-collapsible-header-weaker-active }
+		.HeaderBg { color: @collapsible-header }
+		.HeaderBg--Hover { color: @collapsible-header-hover }
+		.HeaderBg--Active { color: @collapsible-header-active }
+		.HeaderColor { color: @on-collapsible-header }
+		.HeaderColor--Hover { color: @on-collapsible-header-hover }
+		.HeaderColor--Active { color: @on-collapsible-header-active }
+		.HeaderColor--Weaker { color: @on-collapsible-header-weaker }
+		.HeaderColor--Weaker--Hover { color: @on-collapsible-header-weaker-hover }
+		.HeaderColor--Weaker--Active { color: @on-collapsible-header-weaker-active }
 	}
 
 	.EventList {
-		.ListItemBG { color: @list-item }
-		.ListItemBG--Hover { color: @list-item-hover }
-		.ListItemBG--Active { color: @list-item-active }
-		.ListItemText { color: @on-list-item }
-		.ListItemText--Hover { color: @on-list-item-hover }
-		.ListItemText--Active { color: @on-list-item-active }
-		.ListItemText--Weaker { color: @on-list-item-weaker }
-		.ListItemText--Weaker--Hover { color: @on-list-item-weaker-hover }
-		.ListItemText--Weaker--Active { color: @on-list-item-weaker-active }
+		.ListItemBg { color: @list-item }
+		.ListItemBg--Hover { color: @list-item-hover }
+		.ListItemBg--Active { color: @list-item-active }
+		.ListItemColor { color: @on-list-item }
+		.ListItemColor--Hover { color: @on-list-item-hover }
+		.ListItemColor--Active { color: @on-list-item-active }
+		.ListItemColor--Weaker { color: @on-list-item-weaker }
+		.ListItemColor--Weaker--Hover { color: @on-list-item-weaker-hover }
+		.ListItemColor--Weaker--Active { color: @on-list-item-weaker-active }
 	}
 
 	.ButtonOutcome {
-		.DefaultBG { color: @outcome-default }
-		.DefaultBG--Hover { color: @outcome-default-hover }
-		.DefaultBG--Active { color: @outcome-default-active }
-		.DefaultText { color: @on-outcome-default }
-		.DefaultText--Hover { color: @on-outcome-default-hover }
-		.DefaultText--Active { color: @on-outcome-default-active }
-		.DefaultText--Weaker { color: @on-outcome-default-weaker }
-		.DefaultText--Weaker--Hover { color: @on-outcome-default-weaker-hover }
-		.DefaultText--Weaker--Active { color: @on-outcome-default-weaker-active }
+		.DefaultBg { color: @outcome-default }
+		.DefaultBg--Hover { color: @outcome-default-hover }
+		.DefaultBg--Active { color: @outcome-default-active }
+		.DefaultColor { color: @on-outcome-default }
+		.DefaultColor--Hover { color: @on-outcome-default-hover }
+		.DefaultColor--Active { color: @on-outcome-default-active }
+		.DefaultColor--Weaker { color: @on-outcome-default-weaker }
+		.DefaultColor--Weaker--Hover { color: @on-outcome-default-weaker-hover }
+		.DefaultColor--Weaker--Active { color: @on-outcome-default-weaker-active }
 
-		.SelectedBG { color: @outcome-selected }
-		.SelectedBG--Hover { color: @outcome-selected-hover }
-		.SelectedBG--Active { color: @outcome-selected-active }
-		.SelectedText { color: @on-outcome-selected }
-		.SelectedText--Hover { color: @on-outcome-selected-hover }
-		.SelectedText--Active { color: @on-outcome-selected-active }
-		.SelectedText--Weaker { color: @on-outcome-selected-weaker }
-		.SelectedText--Weaker--Hover { color: @on-outcome-selected-weaker-hover }
-		.SelectedText--Weaker--Active { color: @on-outcome-selected-weaker-active }
+		.SelectedBg { color: @outcome-selected }
+		.SelectedBg--Hover { color: @outcome-selected-hover }
+		.SelectedBg--Active { color: @outcome-selected-active }
+		.SelectedColor { color: @on-outcome-selected }
+		.SelectedColor--Hover { color: @on-outcome-selected-hover }
+		.SelectedColor--Active { color: @on-outcome-selected-active }
+		.SelectedColor--Weaker { color: @on-outcome-selected-weaker }
+		.SelectedColor--Weaker--Hover { color: @on-outcome-selected-weaker-hover }
+		.SelectedColor--Weaker--Active { color: @on-outcome-selected-weaker-active }
 
-		.DisabledBG {color:@outcome-disabled}
-		.DisabledText {color:@on-outcome-disabled}
+		.DisabledBg {color:@outcome-disabled}
+		.DisabledColor {color:@on-outcome-disabled}
 	}
 // }
